@@ -1,7 +1,28 @@
+from pydantic import BaseModel
+
+
 BASE_URL = 'https://shop.poohcorner.co.uk/'
 
 
-def extract_main_page():
+class Product(BaseModel):
+    name: str
+    description: str
+    price: float
+    currency: str
+    images: list[str]
+
+
+class Subcategory(BaseModel):
+    name: str
+    products: list[Product]
+
+
+class Category(BaseModel):
+    name: str
+    subcategories: list[Subcategory]
+
+
+def extract_categories():
     pass
 
 

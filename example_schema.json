@@ -12,12 +12,8 @@
               "price": "32,00",
               "currency": "PLN",
               "images": [
-                {
-                  "src": "./output/31351290-abaf-4035-ad5c-d89a878433fb"
-                },
-                {
-                  "src": "./output/964751fa-85d4-4966-9f12-ea8b4cb4aa97"
-                }
+                "./output/31351290-abaf-4035-ad5c-d89a878433fb",
+                "./output/964751fa-85d4-4966-9f12-ea8b4cb4aa97"
               ]
             }
           ]

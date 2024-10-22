@@ -1,0 +1,28 @@
+[
+  {
+    "category": {
+      "name": "Books",
+      "subcategories": [
+        {
+          "name": "Tigger",
+          "products": [
+            {
+              "name": "Tigger 4 Piece Puzzle",
+              "description": "This chunky wooden puzzle is ideal for little hands to grasp and put together.",
+              "price": "32,00",
+              "currency": "PLN",
+              "images": [
+                {
+                  "src": "./output/31351290-abaf-4035-ad5c-d89a878433fb"
+                },
+                {
+                  "src": "./output/964751fa-85d4-4966-9f12-ea8b4cb4aa97"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+]

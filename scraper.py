@@ -129,7 +129,7 @@ async def extract_categories() -> list[Category]:
 
 
 async def main():
-    start_time = time.time()
+    start_time = time.perf_counter()
 
     OUTPUT_DIR.mkdir(exist_ok=True)
     IMAGE_OUTPUT_DIR.mkdir(exist_ok=True)
@@ -142,7 +142,7 @@ async def main():
     with open(filename, 'w', encoding='utf-8') as json_file:
         json_file.write(categories.model_dump_json())
 
-    end_time = time.time()
+    end_time = time.perf_counter()
     elapsed_time = end_time - start_time
     print(f"Execution time: {elapsed_time:.5f} seconds")
 

@@ -1,5 +1,6 @@
 import time
 import asyncio
+import logging
 from decimal import Decimal
 from uuid import uuid4
 from pathlib import Path
@@ -18,6 +19,13 @@ IMAGE_OUTPUT_DIR = OUTPUT_DIR / 'images'
 limits = httpx.Limits(max_keepalive_connections=5, max_connections=10)
 client = httpx.AsyncClient(timeout=10.0, limits=limits)
 
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.StreamHandler()
+    ]
+)
 
 class Product(BaseModel):
     name: str
@@ -82,6 +90,8 @@ async def extract_product(sub_url: str) -> Product:
         images=[image_src]
     )
 
+    logging.info(f"Extracted product: {product_name}")
+
     return product
 
 
@@ -99,15 +109,13 @@ async def extract_subcategory(sub_url: str) -> Subcategory:
         products=products_list
     )
 
+    logging.info(f"Successfully extracted all products from subcategory {subcategory_name}")
+
     return subcategory
 
 
 async def extract_categories() -> list[Category]:
-    response = await client.get(BASE_URL)
-    if response.status_code != 200:
-        raise ValueError(f"Wrong status code {response.status_code} while requesting main page")
-
-    page = BeautifulSoup(response.text, 'lxml')
+    page = await fetch_page(BASE_URL)
 
     html_categories = page.find_all('li', class_='menu-item-has-children')
     categories: list[Category] = []
@@ -123,6 +131,9 @@ async def extract_categories() -> list[Category]:
             name=category_name,
             subcategories=subcategories_list
         )
+
+        logging.info(f"Successfully extracted category: {category_name}")
+
         categories.append(category)
 
     return categories

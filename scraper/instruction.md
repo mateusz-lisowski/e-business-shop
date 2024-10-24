@@ -12,7 +12,7 @@ This scraper allows to scrape given electronic shop, including:
 
 1. Navigate to directory where the scraper is *(for default config)*:   
 `cd scraper`
-2. Install scraper dependencies:  
+2. Install scraper dependencies ***(remember to activate venv)***:  
 `pip install -r requirements.txt`
 3. Execute scraper script:  
 `python scraper.py`
@@ -24,4 +24,4 @@ This scraper allows to scrape given electronic shop, including:
 - `README.md` - scraper instruction
 - `requriements.txt` - scraper dependencies
 - `scraper.py` - scraper script
-- `.gitignore` - custom package **.gitignore** file
+- `.gitignore` - module's **.gitignore** file

@@ -1,5 +1,6 @@
 import asyncio
 import logging
+import shutil
 import time
 from decimal import Decimal
 from pathlib import Path
@@ -11,13 +12,12 @@ from bs4 import BeautifulSoup
 from price_parser import Price
 from pydantic import BaseModel
 
-
 BASE_URL = 'https://shop.poohcorner.co.uk/'
 OUTPUT_DIR = Path('output')
 IMAGE_OUTPUT_DIR = OUTPUT_DIR / 'images'
 
 limits = httpx.Limits(max_keepalive_connections=5, max_connections=10)
-client = httpx.AsyncClient(timeout=10.0, limits=limits)
+client = httpx.AsyncClient(timeout=None, limits=limits)
 
 logging.basicConfig(
     level=logging.INFO,
@@ -61,12 +61,12 @@ async def save_photo_async(url: str) -> str:
     if response.status_code != 200:
         raise ValueError(f"Wrong status code {response.status_code} while requesting image")
 
-    filename = f'{IMAGE_OUTPUT_DIR}/{uuid4()}.png'
+    filename = IMAGE_OUTPUT_DIR / f'{uuid4()}.png'
 
     async with aiofiles.open(filename, 'wb') as image_file:
         await image_file.write(response.content)
 
-    return filename
+    return filename.name
 
 
 async def extract_product(sub_url: str) -> Product:
@@ -75,19 +75,23 @@ async def extract_product(sub_url: str) -> Product:
     product_name = page.find('h1').text
     product_description_container = page.find('div', class_='product-short-description rte')
     product_price_str = page.find('span', class_='amount').text
-    product_image_url = page.find('product-slider').div.a['href']
+    product_image_urls_containers = page.find('product-slider').find_all(
+        'div',
+        class_='product-single__media product-single__media-image aspect-ratio aspect-ratio--adapt'
+    )
 
     product_description = product_description_container.get_text()
     product_price = Price.fromstring(product_price_str)
 
-    image_src = await save_photo_async(product_image_url)
+    product_image_urls = [container.a['href'] for container in product_image_urls_containers]
+    image_sources = await asyncio.gather(*(save_photo_async(url) for url in product_image_urls))
 
     product = Product(
         name=product_name,
         description=product_description,
         price=product_price.amount,
         currency=product_price.currency,
-        images=[image_src]
+        images=image_sources
     )
 
     logging.info(f"Extracted product: {product_name}")
@@ -142,20 +146,23 @@ async def extract_categories() -> list[Category]:
 async def main():
     start_time = time.perf_counter()
 
-    OUTPUT_DIR.mkdir(exist_ok=True)
-    IMAGE_OUTPUT_DIR.mkdir(exist_ok=True)
+    if OUTPUT_DIR.exists():
+        shutil.rmtree(OUTPUT_DIR)
+
+    OUTPUT_DIR.mkdir()
+    IMAGE_OUTPUT_DIR.mkdir()
 
     categories = Categories(
         categories=await extract_categories()
     )
 
-    filename = f'{OUTPUT_DIR}/output.json'
+    filename = OUTPUT_DIR / 'output.json'
     with open(filename, 'w', encoding='utf-8') as json_file:
         json_file.write(categories.model_dump_json())
 
     end_time = time.perf_counter()
     elapsed_time = end_time - start_time
-    print(f"Execution time: {elapsed_time:.5f} seconds")
+    (logging.info(f"Execution time: {elapsed_time:.5f} seconds"))
 
 
 if __name__ == '__main__':

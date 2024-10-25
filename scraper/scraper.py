@@ -162,7 +162,7 @@ async def main():
 
     end_time = time.perf_counter()
     elapsed_time = end_time - start_time
-    (logging.info(f"Execution time: {elapsed_time:.5f} seconds"))
+    logging.info(f"Execution time: {elapsed_time:.5f} seconds")
 
 
 if __name__ == '__main__':

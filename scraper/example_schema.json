@@ -1,0 +1,35 @@
+{
+  "categories": [
+    {
+      "name": "Characters",
+      "subcategories": [
+        {
+          "name": "Winnie the Pooh",
+          "products": [
+            {
+              "name": "Pooh 4 Piece Puzzle",
+              "description": "This chunky wooden puzzle is ideal for little hands to grasp and put together.",
+              "price": "5.99",
+              "currency": "£",
+              "images": [
+                "ed05e1ae-c49c-4650-96a9-03edb32dfffe.png"
+              ]
+            },
+            {
+              "name": "Hundred Acre Wood Winnie the Pooh Soft Toy",
+              "description": "The adorable Winnie-the-Pooh 20cm soft toy makes the perfect first companion for baby.",
+              "price": "15.99",
+              "currency": "£",
+              "images": [
+                "251a8b2f-9ca9-4d6a-ad8a-1b7e9922c2b8.png",
+                "679caa31-3105-4d31-8434-c2526a20ed8a.png",
+                "9544697e-d602-4fde-a2de-0e99c324907e.png",
+                "fc1e1563-f891-4a8d-aa00-79ab2d558957.png"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

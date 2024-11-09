@@ -163,10 +163,10 @@ def addStocks(ids: list[str]):
         update_data = f'''<?xml version="1.0" encoding="UTF-8"?>
         <prestashop>
             <stock_available>
-                <id>{stock_id}</id>  <!-- Użyj zmiennej ID dostępności -->
+                <id>{stock_id}</id> 
                 <id_product>{product_id}</id_product>
                 <id_product_attribute>0</id_product_attribute>
-                <quantity>{quantity_to_add}</quantity>  <!-- Nowa ilość -->
+                <quantity>{quantity_to_add}</quantity> 
                 <depends_on_stock>0</depends_on_stock>
                 <out_of_stock>0</out_of_stock>
                 <id_shop>1</id_shop>

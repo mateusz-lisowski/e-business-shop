@@ -15,6 +15,9 @@ services:
     volumes:
       - ./prestashop_files:/var/www/html  # Lokalne pliki PrestaShop
       - ./logs:/var/www/html/var/logs  # Mapowanie katalogu logs
+      - ./checkout.env:/var/www/html/modules/ps_checkout/.env
+      - ./mbo.env:/var/www/html/modules/ps_mbo/.env
+      - ./metrics.env:/var/www/html/modules/ps_metrics/.env
     depends_on:
       - db
     command: >

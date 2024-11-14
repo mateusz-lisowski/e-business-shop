@@ -1,4 +1,4 @@
-version: '3.8'
+]version: '3.8'
 
 services:
   prestashop:
@@ -22,7 +22,9 @@ services:
       - db
     command: >
       bash -c "mkdir -p /var/www/html/var/cache/dev /var/www/html/var/cache/prod &&
+              mkdir -p /var/www/html/var/logs &&
              chmod -R 777 /var/www/html/var/cache &&
+             chmod -R 777 /var/www/html/var/logs &&
              apache2-foreground"
   db:
     image: mariadb:10.5

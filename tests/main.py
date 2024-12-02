@@ -87,8 +87,23 @@ def test_search_by_product_name_and_add_random_to_cart(driver: WebDriver, wait: 
     button.click()
 
 
-def test_remove_products_from_cart(driver):
-    pass
+def test_remove_products_from_cart(driver: WebDriver):
+
+
+    # Navigate to cart
+    driver.get('http://localhost:8080/pl/cart?action=show')
+
+    # Fetch all delete links
+    delete_links = driver.find_elements(By.CLASS_NAME, 'remove-from-cart')
+
+    # Choose few links to delete
+    delete_links = random.sample(delete_links, 3)
+
+    # Extract categories links
+    delete_links = [d.get_attribute('href') for d in delete_links]
+
+    for delete_link in delete_links:
+        driver.get(delete_link)
 
 
 def test_register_new_account(driver):
@@ -129,7 +144,7 @@ def main():
     # Tests
     # test_add_products_to_cart(driver)
     # test_search_by_product_name_and_add_random_to_cart(driver, wait)
-    test_remove_products_from_cart(driver)
+    # test_remove_products_from_cart(driver)
 
     # Close driver
     driver.quit()

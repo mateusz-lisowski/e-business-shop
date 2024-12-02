@@ -120,10 +120,16 @@ def test_download_vat_invoice(driver):
 
 
 def main():
+
+    # Setup
     driver = webdriver.Chrome()
     driver.get(ROOT_URL)
+
+    # Tests
     # test_add_products_to_cart(driver)
     test_search_by_product_name_and_add_random_to_cart(driver)
+
+    # Close driver
     driver.quit()
 
 

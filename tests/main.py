@@ -1,13 +1,62 @@
+import random
+import time
+
 from selenium import webdriver
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.by import By
 
 
-ROOT_URL = 'http://localhost:8080/gb/'
+ROOT_URL = 'http://localhost:8080/pl/'
 
 
-def test_add_products_to_cart(driver):
-    category1 = driver.get_element(By.CLASS_NAME, "information")
+def test_add_products_to_cart(driver: WebDriver):
+
+    # Fetch all categories
+    categories_links = driver.find_elements(By.CLASS_NAME, 'dropdown-item')
+
+    # Choose random categories
+    categories_links = random.sample(categories_links, 2)
+
+    # Extract categories links
+    categories_links = [c.get_attribute('href') for c in categories_links]
+
+    for category_link in categories_links:
+
+        # Navigate to category page
+        driver.get(category_link)
+
+        # Fetch all products on page
+        products_links = driver.find_elements(By.CSS_SELECTOR, '.thumbnail.product-thumbnail')
+
+        # Choose random products
+        try:
+            products_links = random.sample(products_links, 5)
+        except ValueError:
+            print(f"Number of products less than wanted: {len(products_links)}")
+
+        # Extract categories links
+        products_links = [p.get_attribute('href') for p in products_links]
+
+        for product_link in products_links:
+
+            # Navigate to product page
+            driver.get(product_link)
+
+            # Get quantity button
+            quantity_button = driver.find_element(
+                By.CSS_SELECTOR,
+                '.btn.btn-touchspin.js-touchspin.bootstrap-touchspin-up'
+            )
+
+            # Increase products quantity
+            for _ in range(random.randrange(10)):
+                quantity_button.click()
+
+            # Get purchase button
+            button = driver.find_element(By.CSS_SELECTOR, '.btn.btn-primary.add-to-cart')
+
+            # Purchase product
+            button.click()
 
 
 def test_search_by_product_name_and_add_random_to_cart(driver):
@@ -48,6 +97,8 @@ def test_download_vat_invoice(driver):
 
 def main():
     driver = webdriver.Chrome()
+    driver.get(ROOT_URL)
+    test_add_products_to_cart(driver)
     driver.quit()
 
 

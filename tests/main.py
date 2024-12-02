@@ -105,8 +105,52 @@ def test_remove_products_from_cart(driver: WebDriver):
         driver.get(delete_link)
 
 
-def test_register_new_account(driver):
-    pass
+def test_register_new_account(driver: WebDriver):
+
+    # Navigate to register account page
+    driver.get('http://localhost:8080/pl/login?create_account=1')
+
+    # Get first name input element
+    firstname_input = driver.find_element(By.ID, 'field-firstname')
+
+    # Input first name
+    firstname_input.send_keys('Matt')
+
+    # Get last name input element
+    lastname_input = driver.find_element(By.ID, 'field-lastname')
+
+    # Input last name
+    lastname_input.send_keys('Damon')
+
+    # Get email input element
+    email_input = driver.find_element(By.ID, 'field-email')
+
+    # Input email
+    email_input.send_keys('matt.damon@email.com')
+
+    # Get password input element
+    password_input = driver.find_element(By.ID, 'field-password')
+
+    # Input password
+    password_input.send_keys('admin')
+
+    # Get privacy info checkbox
+    privacy_info_checkbox = driver.find_element(By.NAME, 'customer_privacy')
+
+    # Check privacy info checkbox
+    privacy_info_checkbox.click()
+
+    # Get accept privacy policy checkbox
+    privacy_policy_checkbox = driver.find_element(By.NAME, 'psgdpr')
+
+    # Check privacy policy checkbox
+    privacy_policy_checkbox.click()
+
+    # Get save customer button
+    save_customer_button = driver.find_element(By.CSS_SELECTOR, '.btn.btn-primary.form-control-submit.float-xs-right')
+
+    # Save customer
+    save_customer_button.click()
 
 
 def test_order_cart_contents(driver):
@@ -144,6 +188,7 @@ def main():
     # test_add_products_to_cart(driver)
     # test_search_by_product_name_and_add_random_to_cart(driver, wait)
     # test_remove_products_from_cart(driver)
+    test_register_new_account(driver)
 
     # Close driver
     driver.quit()

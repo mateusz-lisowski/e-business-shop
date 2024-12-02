@@ -4,7 +4,7 @@ import time
 from selenium import webdriver
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
 
 
@@ -71,7 +71,7 @@ def test_search_by_product_name_and_add_random_to_cart(driver: WebDriver, wait: 
 
     # Fetch all products on page
     products_links = wait.until(
-        EC.visibility_of_all_elements_located((By.CSS_SELECTOR, '.thumbnail.product-thumbnail'))
+        ec.visibility_of_all_elements_located((By.CSS_SELECTOR, '.thumbnail.product-thumbnail'))
     )
 
     # Choose random product
@@ -128,7 +128,8 @@ def main():
 
     # Tests
     # test_add_products_to_cart(driver)
-    test_search_by_product_name_and_add_random_to_cart(driver, wait)
+    # test_search_by_product_name_and_add_random_to_cart(driver, wait)
+    test_remove_products_from_cart(driver)
 
     # Close driver
     driver.quit()

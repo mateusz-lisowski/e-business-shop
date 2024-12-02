@@ -89,8 +89,7 @@ def test_search_by_product_name_and_add_random_to_cart(driver: WebDriver, wait: 
 
 def test_remove_products_from_cart(driver: WebDriver):
 
-
-    # Navigate to cart
+    # Navigate to cart page
     driver.get('http://localhost:8080/pl/cart?action=show')
 
     # Fetch all delete links

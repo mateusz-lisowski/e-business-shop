@@ -86,8 +86,6 @@ def test_search_by_product_name_and_add_random_to_cart(driver: WebDriver, wait: 
     # Purchase product
     button.click()
 
-    time.sleep(10)
-
 
 def test_remove_products_from_cart(driver):
     pass

@@ -4,6 +4,7 @@ import time
 from selenium import webdriver
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
 
 
 ROOT_URL = 'http://localhost:8080/pl/'
@@ -59,8 +60,30 @@ def test_add_products_to_cart(driver: WebDriver):
             button.click()
 
 
-def test_search_by_product_name_and_add_random_to_cart(driver):
-    pass
+def test_search_by_product_name_and_add_random_to_cart(driver: WebDriver):
+
+    # Get search input element
+    search_input = driver.find_element(By.CLASS_NAME, 'ui-autocomplete-input')
+
+    # Enter searched phrase to input
+    search_input.send_keys('pooh\n')
+
+    # Fetch all products on page
+    products_links = driver.find_elements(By.CSS_SELECTOR, '.thumbnail.product-thumbnail')
+
+    # Choose random product
+    product_link = random.choice(products_links)
+
+    # Navigate to product page
+    driver.get(product_link.get_attribute('href'))
+
+    # Get purchase button
+    button = driver.find_element(By.CSS_SELECTOR, '.btn.btn-primary.add-to-cart')
+
+    # Purchase product
+    button.click()
+
+    time.sleep(10)
 
 
 def test_remove_products_from_cart(driver):
@@ -98,7 +121,8 @@ def test_download_vat_invoice(driver):
 def main():
     driver = webdriver.Chrome()
     driver.get(ROOT_URL)
-    test_add_products_to_cart(driver)
+    # test_add_products_to_cart(driver)
+    test_search_by_product_name_and_add_random_to_cart(driver)
     driver.quit()
 
 

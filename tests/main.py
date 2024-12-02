@@ -61,7 +61,7 @@ def test_add_products_to_cart(driver: WebDriver):
             button.click()
 
 
-def test_search_by_product_name_and_add_random_to_cart(driver: WebDriver):
+def test_search_by_product_name_and_add_random_to_cart(driver: WebDriver, wait: WebDriverWait):
 
     # Get search input element
     search_input = driver.find_element(By.CLASS_NAME, 'ui-autocomplete-input')
@@ -70,7 +70,9 @@ def test_search_by_product_name_and_add_random_to_cart(driver: WebDriver):
     search_input.send_keys('pooh\n')
 
     # Fetch all products on page
-    products_links = driver.find_elements(By.CSS_SELECTOR, '.thumbnail.product-thumbnail')
+    products_links = wait.until(
+        EC.visibility_of_all_elements_located((By.CSS_SELECTOR, '.thumbnail.product-thumbnail'))
+    )
 
     # Choose random product
     product_link = random.choice(products_links)
@@ -123,11 +125,12 @@ def main():
 
     # Setup
     driver = webdriver.Chrome()
+    wait = WebDriverWait(driver, 10)
     driver.get(ROOT_URL)
 
     # Tests
     # test_add_products_to_cart(driver)
-    test_search_by_product_name_and_add_random_to_cart(driver)
+    test_search_by_product_name_and_add_random_to_cart(driver, wait)
 
     # Close driver
     driver.quit()

@@ -243,6 +243,19 @@ def test_check_order_status(driver: WebDriver):
     # Navigate to order history page
     driver.get('http://localhost:8080/pl/order-history')
 
+    # Get all links on page
+    links = driver.find_elements(By.TAG_NAME, 'a')
+
+    # Find link order detail link
+    details_link: str | None = None
+    for link in links:
+        if 'controller=order-detail' in link.get_attribute('href'):
+            details_link = link.get_attribute('href')
+            break
+
+    # Navigate to order details page
+    driver.get(details_link)
+
 
 def test_download_vat_invoice(driver):
     pass

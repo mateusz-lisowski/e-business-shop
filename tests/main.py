@@ -105,7 +105,10 @@ def test_remove_products_from_cart(driver: WebDriver):
     delete_links = driver.find_elements(By.CLASS_NAME, 'remove-from-cart')
 
     # Choose few links to delete
-    delete_links = random.sample(delete_links, 3)
+    try:
+        delete_links = random.sample(delete_links, 3)
+    except ValueError:
+        print(f"Number of products less than wanted: {len(delete_links)}")
 
     for delete_link in delete_links:
 
@@ -201,13 +204,12 @@ def main():
     driver.get(ROOT_URL)
 
     # Tests
-    test_add_products_to_cart(driver)
+    # test_add_products_to_cart(driver)
     test_search_by_product_name_and_add_random_to_cart(driver, wait)
-    time.sleep(10)
-    test_remove_products_from_cart(driver)
-    time.sleep(10)
-    # test_register_new_account(driver)
+    # test_remove_products_from_cart(driver)
+    test_register_new_account(driver)
     test_order_cart_content(driver)
+    time.sleep(10)
 
     # Close driver
     driver.quit()

@@ -60,8 +60,14 @@ def test_add_products_to_cart(driver: WebDriver):
             # Purchase product
             button.click()
 
+            # Wait for product to purchase
+            time.sleep(1)
+
 
 def test_search_by_product_name_and_add_random_to_cart(driver: WebDriver, wait: WebDriverWait):
+
+    # Navigate to main page
+    driver.get(ROOT_URL)
 
     # Get search input element
     search_input = driver.find_element(By.CLASS_NAME, 'ui-autocomplete-input')
@@ -101,11 +107,10 @@ def test_remove_products_from_cart(driver: WebDriver):
     # Choose few links to delete
     delete_links = random.sample(delete_links, 3)
 
-    # Extract categories links
-    delete_links = [d.get_attribute('href') for d in delete_links]
-
     for delete_link in delete_links:
-        driver.get(delete_link)
+
+        # Delete product
+        delete_link.click()
 
 
 def test_register_new_account(driver: WebDriver):
@@ -196,9 +201,11 @@ def main():
     driver.get(ROOT_URL)
 
     # Tests
-    # test_add_products_to_cart(driver)
-    # test_search_by_product_name_and_add_random_to_cart(driver, wait)
-    # test_remove_products_from_cart(driver)
+    test_add_products_to_cart(driver)
+    test_search_by_product_name_and_add_random_to_cart(driver, wait)
+    time.sleep(10)
+    test_remove_products_from_cart(driver)
+    time.sleep(10)
     # test_register_new_account(driver)
     test_order_cart_content(driver)
 

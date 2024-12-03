@@ -14,6 +14,9 @@ ROOT_URL = 'http://localhost:8080/pl/'
 
 def test_add_products_to_cart(driver: WebDriver):
 
+    # Navigate to main page
+    driver.get(ROOT_URL)
+
     # Fetch all categories
     categories_links = driver.find_elements(By.CLASS_NAME, 'dropdown-item')
 
@@ -265,7 +268,6 @@ def main():
     # Setup
     driver = webdriver.Chrome()
     wait = WebDriverWait(driver, 10)
-    driver.get(ROOT_URL)
 
     start_time = time.perf_counter()
 

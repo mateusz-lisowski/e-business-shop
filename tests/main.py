@@ -219,7 +219,7 @@ def test_order_cart_content(driver: WebDriver):
     next_delivery_button.click()
 
     # Get payment option button
-    payment_option = driver.find_element(By.ID, 'payment-option-2')
+    payment_option = driver.find_element(By.ID, 'payment-option-3')
 
     # Chose given payment method
     payment_option.click()

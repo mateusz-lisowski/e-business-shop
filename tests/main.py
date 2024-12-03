@@ -237,18 +237,6 @@ def test_order_cart_content(driver: WebDriver):
     time.sleep(1)
 
 
-def test_order_with_payment_method(driver):
-    pass
-
-
-def test_chose_one_carrier(driver):
-    pass
-
-
-def test_accept_order(driver):
-    pass
-
-
 def test_check_order_status(driver):
     pass
 

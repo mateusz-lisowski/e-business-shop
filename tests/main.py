@@ -265,6 +265,11 @@ def test_download_vat_invoice(driver):
 
 def main():
 
+    # Configure Chrome options
+    chrome_options = Options()
+    chrome_options.add_argument("--ignore-certificate-errors")
+    chrome_options.add_argument("--ignore-ssl-errors")
+
     # Setup
     driver = webdriver.Chrome()
     wait = WebDriverWait(driver, 10)

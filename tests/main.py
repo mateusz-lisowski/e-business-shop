@@ -255,6 +255,8 @@ def main():
     wait = WebDriverWait(driver, 10)
     driver.get(ROOT_URL)
 
+    start_time = time.perf_counter()
+
     # Tests
     test_add_products_to_cart(driver)
     test_search_by_product_name_and_add_random_to_cart(driver, wait)
@@ -264,9 +266,13 @@ def main():
     test_check_order_status(driver)
     time.sleep(10)
 
+    end_time = time.perf_counter()
+
     # Close driver
     driver.quit()
 
+    # Calculate time taken by tests
+    print(f"Tests took: {(end_time - start_time):.2f}s")
 
 if __name__ == '__main__':
     main()

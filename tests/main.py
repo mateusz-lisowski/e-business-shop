@@ -3,6 +3,7 @@ import time
 import uuid
 
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
@@ -240,7 +241,7 @@ def test_order_cart_content(driver: WebDriver):
     time.sleep(1)
 
 
-def test_check_order_status(driver: WebDriver):
+def test_check_order_status_and_download_invoice(driver: WebDriver):
 
     # Navigate to order history page
     driver.get('http://localhost:8080/pl/order-history')
@@ -258,9 +259,24 @@ def test_check_order_status(driver: WebDriver):
     # Navigate to order details page
     driver.get(details_link)
 
+    # Get div with download link
+    section = driver.find_element(By.ID, 'order-infos')
 
-def test_download_vat_invoice(driver):
-    pass
+    # Get all links
+    links = section.find_elements(By.TAG_NAME, 'a')
+
+    # Find download link
+    download_link: str | None = None
+    for link in links:
+        if 'controller=pdf-invoice' in link.get_attribute('href'):
+            download_link = link.get_attribute('href')
+            break
+
+    # Download invoice
+    driver.get(download_link)
+
+    # Wait for invoice to download
+    time.sleep(3)
 
 
 def main():
@@ -282,7 +298,7 @@ def main():
     test_remove_products_from_cart(driver)
     test_register_new_account(driver)
     test_order_cart_content(driver)
-    test_check_order_status(driver)
+    test_check_order_status_and_download_invoice(driver)
 
     end_time = time.perf_counter()
 

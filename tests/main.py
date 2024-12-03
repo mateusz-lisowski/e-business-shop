@@ -153,8 +153,16 @@ def test_register_new_account(driver: WebDriver):
     save_customer_button.click()
 
 
-def test_order_cart_contents(driver):
-    pass
+def test_order_cart_content(driver: WebDriver):
+
+    # Navigate to cart page
+    driver.get('http://localhost:8080/pl/cart?action=show')
+
+    # Get purchase button
+    purchase_button = driver.find_element(By.CSS_SELECTOR, '.btn.btn-primary')
+
+    # Press purchase button
+    purchase_button.click()
 
 
 def test_order_with_payment_method(driver):
@@ -188,7 +196,8 @@ def main():
     # test_add_products_to_cart(driver)
     # test_search_by_product_name_and_add_random_to_cart(driver, wait)
     # test_remove_products_from_cart(driver)
-    test_register_new_account(driver)
+    # test_register_new_account(driver)
+    test_order_cart_content(driver)
 
     # Close driver
     driver.quit()

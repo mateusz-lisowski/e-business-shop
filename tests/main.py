@@ -179,6 +179,30 @@ def test_order_cart_content(driver: WebDriver):
     # Press purchase button
     purchase_button.click()
 
+    # Get address input element
+    address_input = driver.find_element(By.ID, 'field-address1')
+
+    # Input address
+    address_input.send_keys('Downing Street')
+
+    # Get postal code input element
+    postal_code_input = driver.find_element(By.ID, 'field-postcode')
+
+    # Input postal code
+    postal_code_input.send_keys('70-010')
+
+    # Get city input element
+    city_input = driver.find_element(By.ID, 'field-city')
+
+    # Input city
+    city_input.send_keys('London')
+
+    # Get next button
+    next_button = driver.find_element(By.NAME, 'confirm-addresses')
+
+    # Navigate to next section
+    next_button.click()
+
 
 def test_order_with_payment_method(driver):
     pass

@@ -1,7 +1,6 @@
 import random
 import time
 import uuid
-from turtledemo.penrose import start
 
 from selenium import webdriver
 from selenium.webdriver.chrome.webdriver import WebDriver
@@ -277,7 +276,6 @@ def main():
     test_register_new_account(driver)
     test_order_cart_content(driver)
     test_check_order_status(driver)
-    time.sleep(10)
 
     end_time = time.perf_counter()
 

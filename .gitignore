@@ -2,3 +2,5 @@
 /cache
 backend/prestashop/prestashop_files/var/cache/
 *.env
+.venv
+venv

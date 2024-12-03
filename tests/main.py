@@ -271,7 +271,7 @@ def main():
     chrome_options.add_argument("--ignore-ssl-errors")
 
     # Setup
-    driver = webdriver.Chrome()
+    driver = webdriver.Chrome(options=chrome_options)
     wait = WebDriverWait(driver, 10)
 
     start_time = time.perf_counter()

@@ -13,7 +13,7 @@ from price_parser import Price
 from pydantic import BaseModel
 
 BASE_URL = 'https://shop.poohcorner.co.uk/'
-OUTPUT_DIR = Path('output')
+OUTPUT_DIR = Path('../output')
 IMAGE_OUTPUT_DIR = OUTPUT_DIR / 'images'
 
 limits = httpx.Limits(max_keepalive_connections=5, max_connections=10)

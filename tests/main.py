@@ -198,10 +198,43 @@ def test_order_cart_content(driver: WebDriver):
     city_input.send_keys('London')
 
     # Get next button
-    next_button = driver.find_element(By.NAME, 'confirm-addresses')
+    next_address_button = driver.find_element(By.NAME, 'confirm-addresses')
 
     # Navigate to next section
-    next_button.click()
+    next_address_button.click()
+
+    # Get delivery checkbox
+    delivery_checkbox = driver.find_element(By.ID, 'delivery_option_3')
+
+    # Check delivery checkbox
+    delivery_checkbox.click()
+
+    # Get next button
+    next_delivery_button = driver.find_element(By.NAME, 'confirmDeliveryOption')
+
+    # Navigate to next section
+    next_delivery_button.click()
+
+    # Get payment option button
+    payment_option = driver.find_element(By.ID, 'payment-option-2')
+
+    # Chose given payment method
+    payment_option.click()
+
+    # Get approve conditions checkbox
+    approve_conditions_button = driver.find_element(By.ID, 'conditions_to_approve[terms-and-conditions]')
+
+    # Check approve conditions checkbox
+    approve_conditions_button.click()
+
+    # Get indent button
+    indent_button = driver.find_element(By.CSS_SELECTOR, '.btn.btn-primary.center-block')
+
+    # Place an order
+    indent_button.click()
+
+    # Wait for order to be processed
+    time.sleep(1)
 
 
 def test_order_with_payment_method(driver):

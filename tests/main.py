@@ -1,5 +1,6 @@
 import random
 import time
+import uuid
 
 from selenium import webdriver
 from selenium.webdriver.chrome.webdriver import WebDriver
@@ -137,7 +138,7 @@ def test_register_new_account(driver: WebDriver):
     email_input = driver.find_element(By.ID, 'field-email')
 
     # Input email
-    email_input.send_keys('matt.damon@email.com')
+    email_input.send_keys(f'matt.damon.{uuid.uuid4()}@email.com')
 
     # Get password input element
     password_input = driver.find_element(By.ID, 'field-password')
@@ -162,6 +163,9 @@ def test_register_new_account(driver: WebDriver):
 
     # Save customer
     save_customer_button.click()
+
+    # Wait for customer to be saved
+    time.sleep(1)
 
 
 def test_order_cart_content(driver: WebDriver):

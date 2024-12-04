@@ -1,0 +1,49 @@
+services:
+  prestashop:
+    image: aukhjgedvf/prestashop-custom:1.0.5  # Nowy obraz PrestaShop
+    ports:
+      - "8080:80"
+    environment:
+      PS_DEV_MODE: '1'
+      PS_INSTALL_MODE: '0'  # Pominięcie instalacji
+      DB_SERVER: db
+      DB_NAME: prestashop
+      DB_USER: prestashop
+      DB_PASSWORD: prestashop
+    depends_on:
+      - db
+    networks:
+      - prestashop_network
+
+  db:
+    image: mariadb:10.5
+    environment:
+      MYSQL_ROOT_PASSWORD: prestashop
+      MYSQL_DATABASE: prestashop
+      MYSQL_USER: prestashop
+      MYSQL_PASSWORD: prestashop
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./db_backup.sql:/docker-entrypoint-initdb.d/db_backup.sql  # Mapowanie backupu bazy danych
+    networks:
+      - prestashop_network
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx3
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./ssl:/etc/ssl/certs
+    ports:
+      - "443:443"
+    depends_on:
+      - prestashop
+    networks:
+      - prestashop_network
+
+volumes:
+  db_data:
+
+networks:
+  prestashop_network:
+    driver: bridge

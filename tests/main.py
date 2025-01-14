@@ -1,3 +1,4 @@
+import argparse
 import random
 import time
 import uuid
@@ -10,13 +11,18 @@ from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
 
 
-ROOT_URL = 'http://localhost:8080/pl/'
+parser = argparse.ArgumentParser(description="CLI to test prestashop instance in different environments")
+parser.add_argument('url', type=str, help="Page url without trailing slash")
+args = parser.parse_args()
+
+
+ROOT_URL = args.url
 
 
 def test_add_products_to_cart(driver: WebDriver):
 
     # Navigate to main page
-    driver.get(ROOT_URL)
+    driver.get(f'{ROOT_URL}/')
 
     # Fetch all categories
     categories_links = driver.find_elements(By.CLASS_NAME, 'dropdown-item')
@@ -72,7 +78,7 @@ def test_add_products_to_cart(driver: WebDriver):
 def test_search_by_product_name_and_add_random_to_cart(driver: WebDriver, wait: WebDriverWait):
 
     # Navigate to main page
-    driver.get(ROOT_URL)
+    driver.get(f'{ROOT_URL}/')
 
     # Get search input element
     search_input = driver.find_element(By.CLASS_NAME, 'ui-autocomplete-input')
@@ -104,7 +110,7 @@ def test_search_by_product_name_and_add_random_to_cart(driver: WebDriver, wait: 
 def test_remove_products_from_cart(driver: WebDriver):
 
     # Navigate to cart page
-    driver.get('http://localhost:8080/pl/cart?action=show')
+    driver.get(f'{ROOT_URL}/cart?action=show')
 
     # Fetch all delete links
     delete_links = driver.find_elements(By.CLASS_NAME, 'remove-from-cart')
@@ -124,7 +130,7 @@ def test_remove_products_from_cart(driver: WebDriver):
 def test_register_new_account(driver: WebDriver):
 
     # Navigate to register account page
-    driver.get('http://localhost:8080/pl/login?create_account=1')
+    driver.get(f'{ROOT_URL}/login?create_account=1')
 
     # Get first name input element
     firstname_input = driver.find_element(By.ID, 'field-firstname')
@@ -175,7 +181,7 @@ def test_register_new_account(driver: WebDriver):
 def test_order_cart_content(driver: WebDriver):
 
     # Navigate to cart page
-    driver.get('http://localhost:8080/pl/cart?action=show')
+    driver.get(f'{ROOT_URL}/cart?action=show')
 
     # Get purchase button
     purchase_button = driver.find_element(By.CSS_SELECTOR, '.btn.btn-primary')
@@ -244,7 +250,7 @@ def test_order_cart_content(driver: WebDriver):
 def test_check_order_status_and_download_invoice(driver: WebDriver):
 
     # Navigate to order history page
-    driver.get('http://localhost:8080/pl/order-history')
+    driver.get(f'{ROOT_URL}/order-history')
 
     # Get all links on page
     links = driver.find_elements(By.TAG_NAME, 'a')

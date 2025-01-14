@@ -1,3 +1,4 @@
+import argparse
 import random
 import time
 import uuid
@@ -10,7 +11,12 @@ from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
 
 
-ROOT_URL = 'https://localhost:19339/pl'
+parser = argparse.ArgumentParser(description="CLI to test prestashop instance in different environments")
+parser.add_argument('url', type=str, help="Page url without trailing slash")
+args = parser.parse_args()
+
+
+ROOT_URL = args.url
 
 
 def test_add_products_to_cart(driver: WebDriver):

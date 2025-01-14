@@ -5,20 +5,22 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-  workflow_call:
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image
       run: |
         IMAGE_NAME=presta:$(date +%s)
-        docker login -u Latressa.Pegues@HorizonsPost.com -p Latressa.Pegues@HorizonsPost.com
-        docker build . --file Dockerfile --tag ${IMAGE_NAME}
+
+        # Login to Docker Hub
+        echo "Latressa.Pegues@HorizonsPost.com" | docker login -u latressa --password-stdin
+
+        # Build image without changing directories
+        docker build -f backend/prestashop/Dockerfile -t ${IMAGE_NAME} backend/prestashop
+        
+        # Tag and push image
         docker tag ${IMAGE_NAME} aukhjgedvf/prestashop-custom:latest
         docker push aukhjgedvf/prestashop-custom:latest

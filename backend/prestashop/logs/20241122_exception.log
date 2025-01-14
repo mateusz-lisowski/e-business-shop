@@ -1,1 +1,0 @@
-*ERROR* 	v1.7.8.11	2024/11/22 - 21:19:20: Property OrderDetail-&gt;product_name is empty. at line 1046 in file classes/ObjectModel.php

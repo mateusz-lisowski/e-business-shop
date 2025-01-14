@@ -5568,6 +5568,10 @@ Dziękujemy za cierpliwość.',
     'An answer to your message is available #ct%thread_id% #tc%thread_token%' => 'Odpowiedź na Twoją wiadomość jest dostępna #ct%thread_id% #tc%thread_token%',
     'New credit slip regarding your order' => 'Nowy \'kredyt\' dotyczący zamówienia',
     'New voucher for your order #%s' => 'Nowy bon do zamówienia #%s',
+    'Your order has been changed' => 'zamówienie zostało zmienione',
+    'Product available' => 'produkt dostępny',
+    'New return from order #%d - %s' => 'nowe zamówienie %d - %s',
+    'New order : #%d - %s' => 'nowe zamówienie %d - %s',
   ),
   'GlobalActions' => 
   array (

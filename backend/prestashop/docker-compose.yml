@@ -2,58 +2,38 @@ version: '3.8'
 
 services:
   prestashop:
-    image: prestashop/prestashop:1.7.8
+    image: prestashop-custom:1.2.1
     ports:
-      - "8080:80"
+      - "19339:443"
     environment:
       PS_DEV_MODE: '1'
       PS_INSTALL_MODE: '0'  # Pominięcie instalacji
-      DB_SERVER: db
-      DB_NAME: prestashop
-      DB_USER: prestashop
-      DB_PASSWORD: prestashop
+      DB_SERVER: admin-mysql_db
+      DB_NAME: BE_193151
+      DB_USER: root
+      DB_PASSWORD: student
     volumes:
-      - ./prestashop_files:/var/www/html  # Lokalne pliki PrestaShop
-      - ./logs:/var/www/html/var/logs  # Mapowanie katalogu logs
-      - ./checkout.env:/var/www/html/modules/ps_checkout/.env
-      - ./mbo.env:/var/www/html/modules/ps_mbo/.env
-      - ./metrics.env:/var/www/html/modules/ps_metrics/.env
+      - ./ssl:/etc/apache2/ssl
     depends_on:
-      - db
-    command: >
-      bash -c "mkdir -p /var/www/html/var/cache/dev /var/www/html/var/cache/prod &&
-              mkdir -p /var/www/html/var/logs &&
-             chmod -R 777 /var/www/html/var/cache &&
-             chmod -R 777 /var/www/html/var/logs &&
-             apache2-foreground"
+      - admin-mysql_db
     networks:
       - prestashop_network
+    
 
-  db:
-    image: mariadb:10.5
+  admin-mysql_db:
+    image: mysql:8.0
     environment:
-      MYSQL_ROOT_PASSWORD: prestashop
-      MYSQL_DATABASE: prestashop
-      MYSQL_USER: prestashop
-      MYSQL_PASSWORD: prestashop
+      MYSQL_ROOT_PASSWORD: student
+      MYSQL_DATABASE: BE_193151
     volumes:
       - db_data:/var/lib/mysql
       - ./db_backup.sql:/docker-entrypoint-initdb.d/db_backup.sql  # Mapowanie pliku z backupem bazy
     networks:
       - prestashop_network
+     ports:
+      - "3306:3306"
 
-  nginx:
-    image: nginx:latest
-    container_name: nginx2
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
-      - ./ssl:/etc/ssl/certs
-    ports:
-      - "443:443"
-    depends_on:
-      - prestashop
-    networks:
-      - prestashop_network
+
 
 volumes:
   db_data:

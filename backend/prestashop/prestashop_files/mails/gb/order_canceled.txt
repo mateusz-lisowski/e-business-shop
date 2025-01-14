@@ -4,7 +4,7 @@
 
 Hi {firstname} {lastname},
 
-Order ID {order_name} - Order canceled
+Order ID {order_name} - Order cancelled
 
 Your order with the reference {order_name} from {shop_name} has been canceled by the merchant.
 

@@ -208,7 +208,7 @@ def upload_product_image(product_id: str, image_path: str):
                 response = requests.post(api_URL, headers=headers, files=files)
 
                 if response.status_code in [200, 201]: 
-                    print(f"Image '{image_path}' uploaded successfully!")
+                    print("image uploaded successfully!")
                 else:
                     print(f"Error during uploading image: {response.content.decode()}")
 
@@ -225,11 +225,11 @@ current_dir = os.path.dirname(__file__)
 def upload_all_images(images_info):
     for id, images in images_info.items():
         for image in images:
-            upload_product_image(id, str(current_dir)+'\\..\\output\\images\\'+str(image))
+            upload_product_image(id, str(current_dir)+'\\images\\'+str(image))
 
 
 def main():
-    ids, image_info = addProducts(str(os.path.dirname(__file__))+"\\..\\output\\output.json")
+    ids, image_info = addProducts(str(os.path.dirname(__file__))+"\\output.json")
 
     addStocks(ids)
     upload_all_images(image_info)

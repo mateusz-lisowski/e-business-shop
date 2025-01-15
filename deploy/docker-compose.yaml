@@ -1,0 +1,25 @@
+services:
+  prestashop:
+    image: aukhjgedvf/prestashop-custom:1.1.0
+    ports:
+      - "19339:443"
+    environment:
+      PS_DEV_MODE: '1'
+      PS_INSTALL_MODE: '0'
+      DB_SERVER: admin-mysql_db
+      DB_NAME: BE_193151
+      DB_USER: root
+      DB_PASSWORD: student
+    volumes:
+      - ./ssl:/etc/apache2/ssl
+    networks:
+      - admin-mysql_default
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+
+networks:
+  admin-mysql_default:
+    external: true
